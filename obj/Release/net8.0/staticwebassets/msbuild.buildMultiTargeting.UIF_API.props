@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\UIF_API.props" />
+</Project>
