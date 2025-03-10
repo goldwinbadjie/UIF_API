@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ProjectEvaluation/uif_api.metadata.v9.bin
+/.vs/ProjectEvaluation/uif_api.projects.v9.bin
+/.vs/ProjectEvaluation/uif_api.strings.v9.bin
+/.vs/UIF_API/DesignTimeBuild/.dtbcache.v2
+/.vs/UIF_API/v17/.futdcache.v2
+/.vs/UIF_API/v17/.suo
+/.vs/UIF_API/v17/DocumentLayout.backup.json
+/.vs/UIF_API/v17/DocumentLayout.json
+bin/
+obj/
