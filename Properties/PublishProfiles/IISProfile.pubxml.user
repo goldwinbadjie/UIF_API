@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword />
+    <History>False|2025-03-09T18:47:13.4770486Z||;True|2025-03-09T20:45:02.0863725+02:00||;True|2025-03-09T20:44:48.2962504+02:00||;False|2025-03-09T20:25:19.3257684+02:00||;False|2025-03-09T20:21:10.4677962+02:00||;False|2025-03-09T20:20:34.2054954+02:00||;False|2025-03-09T20:19:33.7148243+02:00||;False|2025-03-09T20:18:19.4761995+02:00||;True|2025-03-09T20:16:19.4187842+02:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=LAPTOP-K4O5R3CD%3bInitial Catalog=UIF%3bIntegrated Security=True%3bTrust Server Certificate=True</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="UIF_API.Data.ApplicationDbContext">
+      <Value>Data Source=LAPTOP-K4O5R3CD%3bInitial Catalog=UIF%3bIntegrated Security=True%3bTrust Server Certificate=True</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

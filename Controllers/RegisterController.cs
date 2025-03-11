@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UIF_API.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using UIF_API.Data;
+using UIF_API.Models;
+using UIF_API.Services;
 
 namespace UIF_API.Controllers
 {
@@ -12,13 +16,16 @@ namespace UIF_API.Controllers
 
         private readonly ILogger<RegisterController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IUIFService _uiFService;
 
-        public RegisterController(ILogger<RegisterController> logger, ApplicationDbContext context)
+        public RegisterController(ILogger<RegisterController> logger, ApplicationDbContext context, IUIFService uiFService)
         {
             _logger = logger;
             _context = context;
+            _uiFService = uiFService;
         }
 
+        [Authorize]
         [HttpGet("getusers")]
         public IActionResult GetUsers()
         {
@@ -27,27 +34,87 @@ namespace UIF_API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(string id)
+        public IActionResult Login([FromBody] Models.LoginRequest loginRequest)
         {
-            var users = _context.Users.Where(u=>u.deviceId==id);
-            return Ok(users);
+            // In a real application, validate the username and password
+            if (loginRequest.Username == "testUser" && loginRequest.Password == "testPassword")
+            {
+                var token = GenerateJwtToken(loginRequest.Username);
+                var user = new LoggedInUserViewModel
+                {
+                    Email = "testUser@gmail.com",
+                    Id = "100",
+                    Name = "Test",
+                    Token = token
+                };
+
+                return Ok(user);
+            }
+
+            return Unauthorized("Invalid username or password");
         }
 
 
-        // POST: api/YourModel
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody]Users model)
+
+        private string GenerateJwtToken(string username)
         {
-            if (model == null)
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new System.Security.Claims.ClaimsIdentity(new[]
+                {
+                new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, username)
+            }),
+                Expires = DateTime.Now.AddMinutes(30),
+                SigningCredentials = credentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+
+        [HttpPost("register")]
+        public IActionResult RegisterUser([FromBody] UserModel user)
+        {
+
+            if (user == null)
             {
                 return BadRequest("Invalid data.");
             }
 
-            // Save to the database
-            _context.Users.Add(model);
-            await _context.SaveChangesAsync();
+            var resgiteredUser = _uiFService.Registeruser(user);
+            return Ok(resgiteredUser);
+        }
 
-            return Ok(model);
+
+        [HttpPost("saveForgetPassword")]
+        public IActionResult SaveForgetPassword([FromBody] ForgotPasswordRequest request)
+        {
+
+            if (request == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var resgiteredUser = _uiFService.SaveForgetPassword(request);
+            return Ok(resgiteredUser);
+        }
+
+
+        [HttpPost("saveResetPassword")]
+        public IActionResult SaveResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var resgiteredUser = _uiFService.SaveResetPassword(request);
+            return Ok(resgiteredUser);
         }
     }
 }
