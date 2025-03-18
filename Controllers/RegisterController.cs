@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using UIF_API.Data;
 using UIF_API.Models;
 using UIF_API.Services;
 
@@ -15,22 +14,12 @@ namespace UIF_API.Controllers
     {
 
         private readonly ILogger<RegisterController> _logger;
-        private readonly ApplicationDbContext _context;
         private readonly IUIFService _uiFService;
 
-        public RegisterController(ILogger<RegisterController> logger, ApplicationDbContext context, IUIFService uiFService)
+        public RegisterController(ILogger<RegisterController> logger, IUIFService uiFService)
         {
             _logger = logger;
-            _context = context;
             _uiFService = uiFService;
-        }
-
-        [Authorize]
-        [HttpGet("getusers")]
-        public IActionResult GetUsers()
-        {
-            var users = _context.Users.ToList();
-            return Ok(users);
         }
 
         [HttpPost("login")]

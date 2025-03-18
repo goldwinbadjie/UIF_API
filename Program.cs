@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
 using System.Text;
-using UIF_API.Data;
 using UIF_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,17 +55,12 @@ builder.Services.AddSwaggerGen(options =>
 
 //builder.Services.AddSwaggerGen();
 
-// Add SQLite DbContext **before** building the app
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 var app = builder.Build();
 
 // Ensure the database is created. This part should be after Build, as you're using the services.
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.EnsureCreated(); // Creates the database schema if not already created
+
 }
 
 // Configure the HTTP request pipeline.
