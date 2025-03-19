@@ -1,3 +1,4 @@
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -10,13 +11,13 @@ namespace UIF_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RegisterController : ControllerBase
+    public class UserController : ControllerBase
     {
 
-        private readonly ILogger<RegisterController> _logger;
+        private readonly ILogger<UserController> _logger;
         private readonly IUIFService _uiFService;
 
-        public RegisterController(ILogger<RegisterController> logger, IUIFService uiFService)
+        public UserController(ILogger<UserController> logger, IUIFService uiFService)
         {
             _logger = logger;
             _uiFService = uiFService;
@@ -80,30 +81,56 @@ namespace UIF_API.Controllers
         }
 
 
-        [HttpPost("saveForgetPassword")]
-        public IActionResult SaveForgetPassword([FromBody] ForgotPasswordRequest request)
-        {
-
-            if (request == null)
-            {
-                return BadRequest("Invalid data.");
-            }
-
-            var resgiteredUser = _uiFService.SaveForgetPassword(request);
-            return Ok(resgiteredUser);
-        }
-
-
-        [HttpPost("saveResetPassword")]
-        public IActionResult SaveResetPassword([FromBody] ResetPasswordRequest request)
+        [HttpPost("saveforgetpassword")]
+        public async Task<IActionResult> SaveForgetPassword([FromBody] ForgotPasswordRequest request)
         {
             if (request == null)
             {
                 return BadRequest("Invalid data.");
             }
 
-            var resgiteredUser = _uiFService.SaveResetPassword(request);
-            return Ok(resgiteredUser);
+            var registeredUser = await _uiFService.SaveForgetPassword(request);
+            return Ok(registeredUser);
         }
+
+        [HttpPost("saveresetpassword")]
+        public async Task<IActionResult> SaveResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var registeredUser = await _uiFService.SaveResetPassword(request);
+            return Ok(registeredUser);
+        }
+
+        [HttpPost("saveaddressdetails")]
+        public async Task<IActionResult> SaveAddressDetails([FromBody] PostalAddress request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var response = await _uiFService.SaveAddressDetails(request);
+            return Ok(response);
+        }
+
+
+        [HttpGet("getoccupations")]
+        public async Task<IActionResult> GetOccupations()
+        {
+            var response = await _uiFService.GetOccupations();
+            return Ok(response);
+        }
+
+        [HttpGet("getqualifications")]
+        public async Task<IActionResult> GetQualifications()
+        {
+            var response = await _uiFService.GetQualifications();
+            return Ok(response);
+        }
+
     }
 }

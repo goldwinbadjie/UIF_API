@@ -8,34 +8,40 @@ namespace UIF_API.Controllers
     [Route("[controller]")]
     public class BankController : ControllerBase
     {
-
-        private readonly ILogger<RegisterController> _logger;
+        private readonly ILogger<BankController> _logger;
         private readonly IUIFService _uiFService;
 
-        public BankController(ILogger<RegisterController> logger, IUIFService uiFService)
+        public BankController(ILogger<BankController> logger, IUIFService uiFService)
         {
             _logger = logger;
             _uiFService = uiFService;
         }
 
         [HttpGet("getallbanks")]
-        public IActionResult GetAllBanks()
+        public async Task<IActionResult> GetAllBanks()
         {
-            var banks = _uiFService.GetAllBanks();
+            var banks = await _uiFService.GetAllBanks();
             return Ok(banks);
         }
 
         [HttpPost("getbranchcode")]
-        public IActionResult GetBranchCode([FromBody] BranchCodeRequest branchCodeRequest)
+        public async Task<IActionResult> GetBranchCode([FromBody] BranchCodeRequest branchCodeRequest)
         {
-            var result = _uiFService.GetBranchCode(branchCodeRequest);
+            var result = await _uiFService.GetBranchCode(branchCodeRequest);
             return Ok(result);
         }
 
         [HttpPost("sendbankdetails")]
-        public IActionResult SendBankDetails([FromBody] SendBankDetailsRequest sendBankDetailsRequest)
+        public async Task<IActionResult> SendBankDetails([FromBody] SendBankDetailsRequest sendBankDetailsRequest)
         {
-            var result = _uiFService.SendBankDetails(sendBankDetailsRequest);
+            var result = await _uiFService.SendBankDetails(sendBankDetailsRequest);
+            return Ok(result);
+        }
+
+        [HttpPost("gebankingdetails")]
+        public async Task<IActionResult> GeBankingDetails([FromBody] RequestByIdNumber requestByIdNumber)
+        {
+            var result = await _uiFService.GeBankingDetails(requestByIdNumber);
             return Ok(result);
         }
     }
