@@ -1,6 +1,16 @@
 ﻿namespace UIF_API.Models
 {
-    public class SendBankDetailsRequest
+    public class SendBankDetailsRequest : BankDetails
+    {
+    }
+
+    public class SendBankDetailsResponse
+    {
+        public string? Message { get; set; }
+        public bool Success { get; set; }
+    }
+
+    public class BankDetails
     {
         public int ApplicationNumber { get; set; }
         public int BankBranchID { get; set; }
@@ -11,11 +21,6 @@
         public string? CreatedBy { get; set; }
         public string? UpdateBy { get; set; }
         public string? UpdateDate { get; set; }
-    }
-
-    public class SendBankDetailsResponse
-    {
-        public string? Message { get; set; }
-        public bool Success { get; set; }
+        public string? IdNumber { get; set; }
     }
 }

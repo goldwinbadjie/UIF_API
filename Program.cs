@@ -24,6 +24,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 // Add services to the container **before** building the app
+builder.Services.AddHttpClient<IUIFService, UIFServiceImplementation>();
 builder.Services.AddScoped<IUIFService, UIFService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -51,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
             }
         });
 });
-
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //builder.Services.AddSwaggerGen();
 
