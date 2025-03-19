@@ -1,5 +1,3 @@
-using Azure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -77,6 +75,19 @@ namespace UIF_API.Controllers
             }
 
             var resgiteredUser = _uiFService.Registeruser(user);
+            return Ok(resgiteredUser);
+        }
+
+        [HttpPost("getufilinguservalidation")]
+        public IActionResult GetUfilingUserValidation([FromBody] UserModel user)
+        {
+
+            if (user == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var resgiteredUser = _uiFService.GetUfilingUserValidation(user);
             return Ok(resgiteredUser);
         }
 
