@@ -24,5 +24,12 @@ namespace UIF_API.Controllers
             var response = await _uiFService.GetLabourCentres(dolRegionID);
             return Ok(response);
         }
+
+        [HttpGet("getdolregions")]
+        public async Task<IActionResult> getdolregions()
+        {
+            var response = await _uiFService.GetDolRegion();
+            return Ok(response);
+        }
     }
 }
