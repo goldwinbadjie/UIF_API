@@ -39,7 +39,7 @@ namespace UIF_API.Services
 
         public async Task<DolRegionResponse?> GetDolRegion()
         {
-            return await _httpClient.GetFromJsonAsync<DolRegionResponse>($"{BaseUrl}/getBanks/getDolRegion");
+            return await _httpClient.GetFromJsonAsync<DolRegionResponse>($"{BaseUrl}/getDolRegion");
         }
 
         public async Task<LabourDolCentreResponse?> GetLabourCentres(string dolRegionID)
