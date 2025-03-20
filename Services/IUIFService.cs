@@ -16,6 +16,7 @@ namespace UIF_API.Services
         Task<OccupationResponse?> GetOccupations();
         Task<QualificationResponse?> GetQualifications();
         Task<LabourDolCentreResponse?> GetLabourCentres(string dolRegionID);
+        Task<DolRegionResponse?> GetDolRegion();
 
     }
 }

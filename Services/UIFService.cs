@@ -91,6 +91,30 @@ namespace UIF_API.Services
             return await Task.FromResult(response);
         }
 
+        public async Task<DolRegionResponse?> GetDolRegion()
+        {
+            var response = new DolRegionResponse
+            {
+                DolRegions = new List<DolRegion>
+            {
+                new DolRegion { DolRegionId = 1, DolRegionName = "Eastern Cape" },
+                new DolRegion { DolRegionId = 2, DolRegionName = "Northern Cape" },
+                new DolRegion { DolRegionId = 3, DolRegionName = "Western Cape" },
+                new DolRegion { DolRegionId = 4, DolRegionName = "Free State" },
+                new DolRegion { DolRegionId = 5, DolRegionName = "Gauteng North" },
+                new DolRegion { DolRegionId = 6, DolRegionName = "Gauteng South" },
+                new DolRegion { DolRegionId = 7, DolRegionName = "Kwazulu Natal" },
+                new DolRegion { DolRegionId = 8, DolRegionName = "Mpumalanga" },
+                new DolRegion { DolRegionId = 9, DolRegionName = "North West" },
+                new DolRegion { DolRegionId = 10, DolRegionName = "Limpopo" }
+            },
+                Message = "success",
+                Success = true
+            };
+
+            return await Task.FromResult(response);
+        }
+
         public async Task<LabourDolCentreResponse?> GetLabourCentres(string dolRegionID)
         {
             var centres = new List<LabourDolCentre>

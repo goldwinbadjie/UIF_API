@@ -37,6 +37,11 @@ namespace UIF_API.Services
             return null;
         }
 
+        public async Task<DolRegionResponse?> GetDolRegion()
+        {
+            return await _httpClient.GetFromJsonAsync<DolRegionResponse>($"{BaseUrl}/getDolRegion");
+        }
+
         public async Task<LabourDolCentreResponse?> GetLabourCentres(string dolRegionID)
         {
             return await _httpClient.GetFromJsonAsync<LabourDolCentreResponse>($"{BaseUrl}/getLabourCentre/dolRegion/${dolRegionID}");
